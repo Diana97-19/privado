@@ -33,9 +33,8 @@ class CrearClienteRequest extends FormRequest
         'cliente_telefono'          => 'required|digits:8',
         'cliente_correo'            => 'required|email',
         'asociado_membrecia'        => 'required',
-        'cliente_nit'               =>'required|digits_between:5,7',
-        'asociado_membrecia'        =>'required'
-                
+        'cliente_nit'               =>'required|digits_between:5,7'
+        
                
                 ];
         

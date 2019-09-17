@@ -68,31 +68,40 @@ class SaldoController extends Controller
 
     $usuario= User ::findOrFail( auth()->user()->id);
 
-        
+    $ventat=0;
+    $total=0;
+
       $car = \Session::get('arraysaldo');
 
         
-         $ventat=0;
-         $total=0;
-
-      foreach ($car as $linea ) {
-        if (($linea["nombre"]->nivel->nivel_descuento)<($usuario->asociado->nivel->nivel_descuento) ) {
-          
-         
-           $diferencia= ($usuario->asociado->nivel->nivel_descuento)- ($linea["nombre"]->nivel->nivel_descuento);
-       
-           $ventas=Venta::whereMonth('created_at', $mes)
-                ->whereYear('created_at', $anio)
-                ->where("asociado_membrecia","=",$linea["nombre"]->asociado_membrecia)
-                ->get();
-            
-                foreach ($ventas as $item) {
-                  $ventat= $item->venta_total;
-                  $total+=$ventat*$diferencia;
-                }
-                   
-               }
-      }
+                  
+          try {
+            foreach ($car as $linea ) {
+              if (($linea["nombre"]->nivel->nivel_descuento)<($usuario->asociado->nivel->nivel_descuento) ) {
+                
+               
+                 $diferencia= ($usuario->asociado->nivel->nivel_descuento)- ($linea["nombre"]->nivel->nivel_descuento);
+             
+                 $ventas=Venta::whereMonth('created_at', $mes)
+                      ->whereYear('created_at', $anio)
+                      ->where("asociado_membrecia","=",$linea["nombre"]->asociado_membrecia)
+                      ->get();
+                  
+                  if (count($ventas)) {
+                    foreach ($ventas as $item) {
+                      $ventat= $item->venta_total;
+                      $total+=$ventat*$diferencia;
+                    }
+                  } 
+                  
+                     
+                         
+                     }
+            }
+          } catch (\Throwable $th) {
+           
+          }
+      
        
         return $total;
         
@@ -110,23 +119,36 @@ class SaldoController extends Controller
          $total=0;
          $idMayorista=5;
 
-      foreach ($car as $linea ) {
-        if ($linea["nombre"]->nivel->id_nivel==$idMayorista ) {
-          
-         
-        
-           $ventas=Venta::whereMonth('created_at', $mes)
-                ->whereYear('created_at', $anio)
-                ->where("asociado_membrecia","=",$linea["nombre"]->asociado_membrecia)
-                ->get();
+         try {
+
+          foreach ($car as $linea ) {
+            if ($linea["nombre"]->nivel->id_nivel==$idMayorista ) {
+              
+             
             
-                foreach ($ventas as $item) {
-                  $ventat= $item->venta_total;
-                  $total+=$ventat*0.05;
-                }
+               $ventas=Venta::whereMonth('created_at', $mes)
+                    ->whereYear('created_at', $anio)
+                    ->where("asociado_membrecia","=",$linea["nombre"]->asociado_membrecia)
+                    ->get();
+                
+
+                    if (count($ventas)) {
+                      foreach ($ventas as $item) {
+                        $ventat= $item->venta_total;
+                        $total+=$ventat*0.05;
+                      }
+                    } 
+                    
                    
-               }
-      }
+                       
+                   }
+          }
+          
+         } catch (\Throwable $th) {
+           //throw $th;
+         }
+
+      
        
         return $total;
         

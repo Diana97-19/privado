@@ -25,7 +25,7 @@
                       
                         
                       <th>
-                        Numero de Compra
+                       Codigo de Compra
 					  </th>
 					  <th>
 						Total
@@ -70,12 +70,14 @@
                               </a>
                             
                           </td>
-                         
+                       
                         </tr>
                         @endforeach
-
+                        <a href="#" class="btn btn-round btn-fill btn-default disabled">*Valores Expresados en Dolares Estadounidenses</a>
                        
-                        
+                        <tr>
+                          <td>Total: ${{number_format($total,2)}}</td>
+                        </tr>
                     </tbody>
                   </table>
                 </div>

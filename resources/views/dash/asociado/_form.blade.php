@@ -16,7 +16,7 @@
 
     <label for="nom" class="col-sm-5 col-form-label">Membresía</label>
     <div class="col-sm-8">
-            <input  class="text-center form-control" readonly="true";  type="text" name="mem" value="{{$usuario->asociado->asociado_membrecia}}" >
+            <input  class="text-center form-control" readonly="true";  type="text" name="mem" value="30125486{{$usuario->asociado->asociado_membrecia}}" >
     </div>
  
 

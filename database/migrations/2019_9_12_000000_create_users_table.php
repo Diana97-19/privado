@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->unsignedBigInteger('asociado_membrecia');
+            $table->char('active', 1) ->default(1);
             $table->timestamps(); 
 
             $table  ->foreign('asociado_membrecia')

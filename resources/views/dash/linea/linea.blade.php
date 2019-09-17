@@ -37,7 +37,7 @@
                                         <td> <p class="text-justify">{{$item["nombre"]->asociado_nombre}}</p>  </td>
                                 
                                  
-                                      <td> <h6 class="text-justify">{{$item["nombre"]->asociado_membrecia}}</h6></td>
+                                      <td> <h6 class="text-justify">30125486{{$item["nombre"]->asociado_membrecia}}</h6></td>
                                       
                                       <td> <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="{{$item["nombre"]->nivel->nivel_nombre}}">
                                       <i class="fa fa-{{$item["nombre"]->nivel->icon}}"></i>
@@ -46,7 +46,7 @@
 
                                         <td> 
 
-                                          @if ($item["nombre"]->asociado->padre==$user->asociado_nombre)
+                                          @if ($item["nombre"]->padre==$user->asociado_membrecia)
                                           <h6 class="text-justify"> Yo </h6>
                                           @else
                                           <h6 class="text-justify">{{$item["nombre"]->asociado->asociado_nombre}} </h6>

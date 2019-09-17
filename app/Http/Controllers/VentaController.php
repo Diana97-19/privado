@@ -19,10 +19,18 @@ class VentaController extends Controller
     public function index()
         {
              $id= auth()->user()->asociado_membrecia;
+             $total=0;
+             $ventas= Venta ::where("asociado_membrecia","=",$id) ->latest()->get();
+
+             foreach ($ventas as $item ) {
+              $total+=$item->venta_total;
+
+             }
 
             return view('dash.ventas.index' , [ 
 
-                    'ventas'=> Venta ::where("asociado_membrecia","=",$id) ->latest()->paginate(5)
+                    'ventas'=> Venta ::where("asociado_membrecia","=",$id) ->latest()->paginate(5),
+                    'total' => $total
 
              ]);
 

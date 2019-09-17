@@ -103,6 +103,8 @@
                                 </span>
                         </h5>
 
+                        <a href="#" class="btn btn-round btn-fill btn-default disabled">*Valores Expresados en Dolares Estadounidenses</a>
+
                 </div> 
                       <br>
                 <h5>

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\Pais; 
 class PaisTableSeeder extends Seeder
 {
     /**

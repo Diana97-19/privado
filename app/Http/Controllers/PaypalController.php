@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use DB;
 use App\Compra;
 use App\Asociado;
 use App\Volumen;
@@ -174,19 +174,32 @@ class PaypalController extends Controller
                 $subtotal += $item->producto_precio * $item->cantidad;
                 $subtotalV += $item->producto_puntos * $item->cantidad;
             }
-            
-            $compra = Compra::create([
-                'asociado_membrecia' => auth()->user()->asociado_membrecia,
-                'compra_total' => $subtotal,
-                'compra_totalVolumen' =>  $subtotalV,
-                'compra_envio'=> $envio
-            ]);
-            
-            foreach($car as $item){
-                $this->saveCompraDetalle($item, $compra->id_compra);
-            }  
+           
+            DB::beginTransaction();
+ 
+                try {
+                    $compra = Compra::create([
+                        'asociado_membrecia' => auth()->user()->asociado_membrecia,
+                        'compra_total' => $subtotal,
+                        'compra_totalVolumen' =>  $subtotalV,
+                        'compra_envio'=> $envio
+                    ]);
+                    
+                    foreach($car as $item){
+                        $this->saveCompraDetalle($item, $compra->id_compra);
+                    }  
+        
+                    $this->volumenInsert();
 
-            $this->volumenInsert();
+                    DB::commit();
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    throw $e;
+                } catch (\Throwable $e) {
+                    DB::rollback();
+                    throw $e;
+                }
+
 
             \Session::forget('car');
         }

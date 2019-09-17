@@ -87,6 +87,8 @@
                                 <td><h6 class="font-weight-bold">Ganancia </h6></td>
                               
                                 <td><h6 class="text-muted">${{number_format($ganancia,2)}}</h6></td> 
+
+                                <a href="#" class="btn btn-round btn-fill btn-default disabled">*Valores Expresados en Dolares Estadounidenses</a>
                         </tr>
                         <tr>
                               <td>@include('partials.back')</td>  

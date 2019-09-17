@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\Cliente; 
 class ClienteTableSeeder extends Seeder
 {
     /**
@@ -20,7 +20,7 @@ class ClienteTableSeeder extends Seeder
             'cliente_telefono' => '20125689',
             'cliente_correo' => 'ana@gmail.es',
             'cliente_nit' => '6389652',
-            'asociado_membrecia' => '0',
+            'asociado_membrecia' => 5,
             'created_at'=> \Carbon\Carbon::now(), 
             'updated_at'=> \Carbon\Carbon::now()
         ],
@@ -30,10 +30,10 @@ class ClienteTableSeeder extends Seeder
             'cliente_primerApellido' => 'perez  ',
             'cliente_segundoApellido' => 'guerra',
             'cliente_direccion' => '14 avenida Zona 1 ', 
-            'cliente_telefono' => '20325698',
+            'cliente_telefono' => '2032569',
             'cliente_correo' => 'luis@gmail.es',
-            'cliente_nit' => '6389678965452',
-            'asociado_membrecia' => '0',
+            'cliente_nit' => '2356895',
+            'asociado_membrecia' => 7,
             'created_at'=> \Carbon\Carbon::now(), 
             'updated_at'=> \Carbon\Carbon::now()
         ], 
@@ -46,7 +46,7 @@ class ClienteTableSeeder extends Seeder
             'cliente_telefono' => '20125689',
             'cliente_correo' => 'mari@gmail.es',
             'cliente_nit' => '8965326',
-            'asociado_membrecia' => '0',
+            'asociado_membrecia' => 10,
             'created_at'=> \Carbon\Carbon::now(), 
             'updated_at'=> \Carbon\Carbon::now()
         ],
@@ -59,7 +59,7 @@ class ClienteTableSeeder extends Seeder
             'cliente_telefono' => '20125689',
             'cliente_correo' => 'cata@gmail.es',
             'cliente_nit' => '6389652',
-            'asociado_membrecia' => '0',
+            'asociado_membrecia' => 10,
             'created_at'=> \Carbon\Carbon::now(), 
             'updated_at'=> \Carbon\Carbon::now()
         ],
@@ -72,7 +72,7 @@ class ClienteTableSeeder extends Seeder
             'cliente_telefono' => '20125689',
             'cliente_correo' => 'eug12@gmail.es',
             'cliente_nit' => '6389652',
-            'asociado_membrecia' => '0',
+            'asociado_membrecia' => 15,
             'created_at'=> \Carbon\Carbon::now(), 
             'updated_at'=> \Carbon\Carbon::now()
         ],
@@ -85,7 +85,7 @@ class ClienteTableSeeder extends Seeder
             'cliente_telefono' => '20125689',
             'cliente_correo' => 'barb@gmail.es',
             'cliente_nit' => '2325648',
-            'asociado_membrecia' => '0',
+            'asociado_membrecia' => 14,
             'created_at'=> \Carbon\Carbon::now(), 
             'updated_at'=> \Carbon\Carbon::now()
         ],
@@ -98,7 +98,7 @@ class ClienteTableSeeder extends Seeder
             'cliente_telefono' => '20125689',
             'cliente_correo' => 'sab@gmail.es',
             'cliente_nit' => '6389652',
-            'asociado_membrecia' => '0',
+            'asociado_membrecia' => 14,
             'created_at'=> \Carbon\Carbon::now(), 
             'updated_at'=> \Carbon\Carbon::now()
         ],
@@ -111,7 +111,7 @@ class ClienteTableSeeder extends Seeder
             'cliente_telefono' => '20125689',
             'cliente_correo' => 'ana@gmail.es',
             'cliente_nit' => '6389652',
-            'asociado_membrecia' => '0',
+            'asociado_membrecia' => 13,
             'created_at'=> \Carbon\Carbon::now(), 
             'updated_at'=> \Carbon\Carbon::now()
         ],

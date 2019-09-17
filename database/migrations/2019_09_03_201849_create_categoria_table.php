@@ -17,7 +17,8 @@ class CreateCategoriaTable extends Migration
             $table->increments('id_categoria');
 			$table->string('categoria_nombre', 255)->unique();
 			$table->text('categoria_descrip');
-			$table->string('categoria_color', 30);
+            $table->string('categoria_color', 30);
+            $table->string('categoria_icon', 50);
             $table->timestamps();
         });
     }

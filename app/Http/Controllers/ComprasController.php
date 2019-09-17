@@ -18,10 +18,19 @@ class ComprasController extends Controller
         public function index()
         {
              $id= auth()->user()->asociado_membrecia;
+             $total=0;
+
+             $compras= Compra ::where("asociado_membrecia","=",$id) ->latest()->get();
+
+             foreach ($compras as $item ) {
+              $total+=$item->compra_total;
+
+             }
 
             return view('dash.compras.index' , [ 
 
-                    'compras'=> Compra ::where("asociado_membrecia","=",$id) ->latest()->paginate(5)
+                    'compras'=> Compra ::where("asociado_membrecia","=",$id) ->latest()->paginate(5),
+                    'total'=>$total
 
              ]);
 

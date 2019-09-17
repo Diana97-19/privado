@@ -90,52 +90,52 @@ foreach ($compras as $compra) {
 
  }
 
-    private function volumenlineaE($mes,$anio)
-    {
-        $rootId= auth()->user()->asociado_membrecia;
-        $data=Asociado ::all();
-        $volumen=0;
-        $total=0;
+    // private function volumenlineaE($mes,$anio)
+    // {
+    //     $rootId= auth()->user()->asociado_membrecia;
+    //     $data=Asociado ::all();
+    //     $volumen=0;
+    //     $total=0;
 
-            //RECORRIDO DE ARBOL 
-            $tree = array('children' => array(),
-                            'root' => array());
-                foreach ($data as $ndx => $node) {
-                    $id = $node['asociado_membrecia'];
-                    /* Puede que exista el children creado si los hijos entran antes que el padre */
-                    $node['children'] = (isset($tree['children'][$id]))?$tree['children'][$id]['children']:array();
-                    $tree['children'][$id] = $node;
+    //         //RECORRIDO DE ARBOL 
+    //         $tree = array('children' => array(),
+    //                         'root' => array());
+    //             foreach ($data as $ndx => $node) {
+    //                 $id = $node['asociado_membrecia'];
+    //                 /* Puede que exista el children creado si los hijos entran antes que el padre */
+    //                 $node['children'] = (isset($tree['children'][$id]))?$tree['children'][$id]['children']:array();
+    //                 $tree['children'][$id] = $node;
 
-                    if ($node['padre'] == $rootId)
-                        $tree['root'][$id] = &$tree['children'][$id];
-                        else
-                        {
-                    // $tree['children'][$node['padre']]['children'][$id] = &$tree['children'][$id];
-                        }
+    //                 if ($node['padre'] == $rootId)
+    //                     $tree['root'][$id] = &$tree['children'][$id];
+    //                     else
+    //                     {
+    //                 // $tree['children'][$node['padre']]['children'][$id] = &$tree['children'][$id];
+    //                     }
 
-                } 
+    //             } 
 
-                foreach ($tree['root'] as $linea ) {
+    //             foreach ($tree['root'] as $linea ) {
 
           
-                  $compras=Compra::whereMonth('created_at', $mes)
-                  ->whereYear('created_at', $anio)
-                  ->where("asociado_membrecia","=",$linea->asociado_membrecia)
-                  ->get();
+    //               $compras=Compra::whereMonth('created_at', $mes)
+    //               ->whereYear('created_at', $anio)
+    //               ->where("asociado_membrecia","=",$linea->asociado_membrecia)
+    //               ->get();
                 
                  
-                  foreach ($compras as $compra) {
+    //               foreach ($compras as $compra) {
           
-                    $total+= $compra->compra_totalVolumen;
+    //                 $total+= $compra->compra_totalVolumen;
                     
-                 }
+    //              }
                   
                   
-                } 
+    //             } 
 
-                $volumen+=$total;
+    //             $volumen+=$total;
 
-                return $volumen;
-             }
+    //             return $volumen;
+    //          }
 
 }

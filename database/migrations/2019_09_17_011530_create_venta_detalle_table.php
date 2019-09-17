@@ -13,7 +13,7 @@ class CreateVentaDetalleTable extends Migration
      */
     public function up()
     {
-        Schema::create('ventadetalle', function (Blueprint $table) {
+        Schema::create('venta_detalle', function (Blueprint $table) {
             $table->bigIncrements('id_ventadetalle');
             $table->unsignedBigInteger('id_producto');
             $table->unsignedBigInteger('id_venta');
@@ -40,6 +40,6 @@ class CreateVentaDetalleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ventadetalle');
+        Schema::dropIfExists('venta_detalle');
     }
 }
