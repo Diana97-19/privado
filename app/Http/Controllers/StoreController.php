@@ -17,7 +17,7 @@ class StoreController extends Controller
         {
             // $id= auth()->user()->asociado_membrecia;
 
-            return view('dash.store.index' , [ 
+            return view('dash.Store.index' , [ 
 
                 'productos'=> Productos ::where('producto_visible','=',1)->paginate(5),
                 'usuario'=> User ::findOrFail( auth()->user()->id)
@@ -32,7 +32,7 @@ class StoreController extends Controller
 
             // $id= auth()->user()->asociado_membrecia;
 
-            return view('dash.store.show',[
+            return view('dash.Store.show',[
     
                 'producto'=>Productos::findOrFail($id),
                 'usuario'=> User ::findOrFail( auth()->user()->id)
