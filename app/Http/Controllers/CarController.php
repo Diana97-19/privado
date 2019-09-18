@@ -20,7 +20,7 @@ class CarController extends Controller
 
             $car = \Session::get('car');
   
-            return view('dash.store.car.index' , [ 
+            return view('dash.Store.car.index' , [ 
 
                 'car'=> $car,
                 'total'=>$total = $this->total(),
@@ -78,7 +78,7 @@ class CarController extends Controller
                 if(count(\Session::get('car')) <= 0) return redirect()->route('dash.store.index');
                 $car = \Session::get('car');
                 $total = $this->total();
-                return view('dash.store.car.orden' , [ 
+                return view('dash.Store.car.orden' , [ 
 
                     'car'=> $car,
                     'total'=>$total,
