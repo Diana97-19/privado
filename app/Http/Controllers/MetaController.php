@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Volumen; 
 use App\Asociado; 
 use App\Compra;
+use App\User;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,6 +14,8 @@ class MetaController extends Controller
      public function __construct()
     {
         $this->middleware('auth');
+
+        if (!\Session::has('arraysaldo')) \Session::put('arraysaldo',array());
     } 
 
     public function index()
@@ -27,11 +30,10 @@ class MetaController extends Controller
         $volumen= $this->volumen($mes,$anio);
         $asociado = Asociado ::findOrFail( auth()->user()->asociado_membrecia);
 
-        try {
-           $volumenl=$this->volumenlinea();
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
+         $this->linea();
+
+           $volumenl=$this->volumenlinea($mes,$anio);
+       
         
              return view('dash.meta.meta', [ 
                  'volumen'=> $volumen,
@@ -82,60 +84,137 @@ foreach ($compras as $compra) {
     }
 
    
- private function volumenlinea()
+ private function volumenlinea($mes,$anio)
  {
-    $volumen =Volumen ::findOrFail( auth()->user()->asociado_membrecia);
+    $usuario= User ::findOrFail( auth()->user()->id);
 
-    return $volumen->volumen_l;
+        $car = \Session::get('arraysaldo');
+
+      
+
+        $total=0;
+     
+
+        try {
+
+         foreach ($car as $linea ) {
+
+           
+
+              $compras=Compra::whereMonth('created_at', $mes)
+                   ->whereYear('created_at', $anio)
+                   ->where("asociado_membrecia","=",$linea["nombre"]->asociado_membrecia)
+                   ->get();
+               
+
+                   if (count($compras)) {
+                     foreach ($compras as $item) {
+                       $comprat= $item->compra_totalVolumen;
+                       $total+=$comprat;
+                     }
+                   } 
+                   
+                  
+                      
+                  
+         }
+         
+        } catch (\Throwable $th) {
+          //throw $th;
+        }
+
+     
+      
+       return $total;
+
 
  }
 
-    // private function volumenlineaE($mes,$anio)
-    // {
-    //     $rootId= auth()->user()->asociado_membrecia;
-    //     $data=Asociado ::all();
-    //     $volumen=0;
-    //     $total=0;
+ private function linea()
+ {
+     $rootId= auth()->user()->asociado_membrecia;
+     $data=Asociado ::all();
+     $usuario= User ::findOrFail( auth()->user()->id);
 
-    //         //RECORRIDO DE ARBOL 
-    //         $tree = array('children' => array(),
-    //                         'root' => array());
-    //             foreach ($data as $ndx => $node) {
-    //                 $id = $node['asociado_membrecia'];
-    //                 /* Puede que exista el children creado si los hijos entran antes que el padre */
-    //                 $node['children'] = (isset($tree['children'][$id]))?$tree['children'][$id]['children']:array();
-    //                 $tree['children'][$id] = $node;
+     \Session::forget('arraysaldo');
 
-    //                 if ($node['padre'] == $rootId)
-    //                     $tree['root'][$id] = &$tree['children'][$id];
-    //                     else
-    //                     {
-    //                 // $tree['children'][$node['padre']]['children'][$id] = &$tree['children'][$id];
-    //                     }
+     
 
-    //             } 
+       $array = [
+           array('id' => '',
+           'user' =>  $usuario,
+           'parentId' => '')
+   
+       ]; 
 
-    //             foreach ($tree['root'] as $linea ) {
+       foreach ($data as $item ) {
+           array_push($array, array('id' => $item->asociado_membrecia,
+       'nombre' => $item,
+       'parentId' => $item->padre));
+       }
+  
 
-          
-    //               $compras=Compra::whereMonth('created_at', $mes)
-    //               ->whereYear('created_at', $anio)
-    //               ->where("asociado_membrecia","=",$linea->asociado_membrecia)
-    //               ->get();
-                
+   $tree= $this->arbol($array,$rootId);
+       
+ $imprimir=  $this->almacenar($tree['root']);
+ }
+
+ function almacenar($tree) {
+
+ 
+     foreach ($tree as $row)
+     { 
+             $car  = \Session::get('arraysaldo');
+
+             $arrayim =array('id' =>$row['id'],
+             'nombre' =>$row['nombre'],
+             'parentId' => $row['parentId']);
+
+
+                 $car [$row['id']] = $arrayim;
+         
+             \Session::put('arraysaldo',  $car);
+
+
                  
-    //               foreach ($compras as $compra) {
-          
-    //                 $total+= $compra->compra_totalVolumen;
-                    
-    //              }
-                  
-                  
-    //             } 
+                     if (count($row['children'])>0){
+                     $this-> almacenar($row['children']);
+                     }
+         
+         
+     } 
 
-    //             $volumen+=$total;
+   
+     } 
 
-    //             return $volumen;
-    //          }
+
+
+
+
+
+     function arbol($data, $rootId)
+     {
+     $tree = array('children' => array(),
+     'root' => array()
+     );
+     foreach ($data as $ndx=>$node)
+     {
+     $id = $node['id'];
+     /* Puede que exista el children creado si los hijos entran antes que el padre */
+     $node['children'] = (isset($tree['children'][$id]))?$tree['children'][$id]['children']:array();
+     $tree['children'][$id] = $node;
+
+     if ($node['parentId'] == $rootId)
+     $tree['root'][$id] = &$tree['children'][$id];
+     else
+     {
+     $tree['children'][$node['parentId']]['children'][$id] = &$tree['children'][$id];
+     }
+
+     }
+     return $tree;
+     }
+
+
 
 }
