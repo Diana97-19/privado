@@ -79,6 +79,8 @@ class LineaController extends Controller
     function almacenar($tree) {
 
     
+        if (count($tree)){
+
           foreach ($tree as $row)
           { 
 
@@ -113,7 +115,7 @@ class LineaController extends Controller
         
           } 
 
-
+        }
    
     
 

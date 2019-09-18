@@ -29,8 +29,7 @@
                                   </thead>
                                   <tbody>
                                     
-                                   
-                                    
+                                  @if ($linea>0)
                                   @forelse ($linea as $item)
                                   <tr>
                                   <td> {{$num++}}</td>
@@ -62,6 +61,11 @@
                                       <tr>
                                         <td> @include('partials.back')</td>
                                       </tr>
+                                  @else
+                                    
+                                  @endif
+                                    
+                                 
                                   
 
                                   </tbody>
